@@ -1,0 +1,135 @@
+{% extends 'layout.html' %}
+{% block contend %}
+    <div class="container" style="width: 60rem">
+        <div class="card">
+            <div class="card-body text-center">
+                <h3 class="mb-4">新建任务</h3>
+                <form id="task_form">
+                    {% for field in form %}
+                        <div class="row mb-4 pt-1">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">{{ field.label }}</label>
+                            <div class="col-sm-10" style="position: relative">
+                                {{ field }}
+                                <span class="error-msg" style="color: red; position: absolute;left: .75rem"></span>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </form>
+
+                <input type="button" id="task_btn" value="新 建 任 务" class="btn btn-success btn-lg my-3">
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <h1>试炼</h1>
+    <h3>示例1</h3>
+    <input type="button" class="btn btn-primary" value="点 击" id="btn1">
+
+    <h3>示例2</h3>
+    <input type="text" id="txtuser" placeholder="名字">
+    <input type="text" id="txtage" placeholder="年龄">
+    <input type="button" class="btn btn-primary" value="点 击" id="btn2">
+
+    <h3>示例3</h3>
+    <form id="form3">
+        <input type="text" name="name" placeholder="名字">
+        <input type="text" name="age" placeholder="年龄">
+        <input type="text" name="email" placeholder="电子邮箱">
+        <input type="text" name="sex" placeholder="性别">
+        <input type="text" name="birth" placeholder="生日">
+    </form>
+    <input type="button" class="btn btn-primary" value="提交" id="btn3">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(function () {
+            // 页面框架加载完成后代码自动执行
+            bindBtn1Event();
+
+            bindBtn2Event();
+
+            bindBtn3Event();
+
+            taskBtnEvent();
+        })
+
+        function bindBtn1Event() {
+            $('#btn1').click(function () {
+                $.ajax({
+                    url: "/task/ajax/",
+                    type: "get",
+                    data: {
+                        n1: 123,
+                        n2: 234,
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        console.log(res);
+                        console.log(res.status);
+                        console.log(res.data);
+                    }
+                })
+            })
+        }
+
+        function bindBtn2Event() {
+            $("#btn2").click(function () {
+                $.ajax({
+                    url: '/task/ajax/',
+                    type: 'post',
+                    data: {
+                        user: $("#txtuser").val(),
+                        age: $("#txtage").val(),
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+            })
+        }
+
+        function bindBtn3Event() {
+            $("#btn3").click(function () {
+                $.ajax({
+                    url: '/task/ajax/',
+                    type: 'post',
+                    data: $("#form3").serialize(),
+                    dataType: "JSON",
+                    success: function (res) {
+                        console.log(res);
+                        console.log(res.name);
+                    }
+
+                })
+            })
+        }
+
+        function taskBtnEvent() {
+            $("#task_btn").click(function(){
+                $(".error-msg").empty()
+                $.ajax({
+                    url: '/task/add/',
+                    type: "post",
+                    data: $("#task_form").serialize(),
+                    dataType: "JSON",
+                    success: function (res){
+                        if(res.status){
+                            alert("添加成功")
+                        }
+                        else {
+                            $.each(res.error,function (name, data){
+                                $("#id_" + name).next().text(data)
+                            })
+                        }
+
+                    }
+                })
+            })
+        }
+
+
+    </script>
+{% endblock %}

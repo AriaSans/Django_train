@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.css' %}">
+{% endblock %}
+
+{% block contend %}
+    <div class="text-center"><span style="font-size: 1.5rem">{{ title_name }}</span></div>
+    <div class="card container-fluid text-center py-3 mt-2" style="width:50rem">
+        <div class="row justify-content-md-center">
+            <div class="col-md-11">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="row mb-3">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">{{ field.label }}</label>
+                            <div class="col-sm-10">
+                                {{ field }}
+                            </div>
+                            <span style="color: red">{{ field.errors.0 }}</span>
+
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-success">新 增</button>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+    <script>
+        $(function(){
+            $('#id_create_time').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: '0',
+                language: "zh-CN",
+                autolose: true
+            });
+
+        })
+    </script>
+{% endblock %}

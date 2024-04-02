@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="jQuery" type="javaScript">
+    <properties>
+      <option name="frameworkName" value="jQuery" />
+      <option name="frameworkVersion" value="" />
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/memberapp/static/plugins/bootstrap-5.3.0/js/bootstrap.bundle.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/memberapp/static/js/jquery-3.7.1.min.js" />
+      <root url="file://$PROJECT_DIR$/memberapp/static/plugins/bootstrap-5.3.0/js/bootstrap.bundle.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
